@@ -19,11 +19,12 @@ import java.io.IOException;
 public class DispatcherServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
+    private static final String DEFAULT_REDIRECT_PREFIX = "redirect:";
 
     private RequestMapping rm;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init() throws ServletException {
         rm = new RequestMapping();
     }
 
@@ -33,11 +34,20 @@ public class DispatcherServlet extends HttpServlet{
         logger.debug("{} - {}", request.getMethod(), requestUrl);
 
         Controller controller = rm.find(requestUrl);
-        String view = controller.execute(request, response);
-        move(view, request, response);
+        try{
+            String view = controller.execute(request, response);
+            move(view, request, response);
+        } catch (Throwable e) {
+            logger.error("Exception : {}", e);
+            throw new ServletException(e.getMessage());
+        }
     }
 
     private void move(String viewName, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (viewName.startsWith(DEFAULT_REDIRECT_PREFIX)) {
+            response.sendRedirect(viewName.substring(DEFAULT_REDIRECT_PREFIX.length()));
+            return;
+        }
         RequestDispatcher rd = request.getRequestDispatcher(viewName);
         rd.forward(request, response);
     }

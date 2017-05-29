@@ -1,8 +1,7 @@
 package core.mvc;
 
 import com.google.common.collect.ImmutableMap;
-import next.controller.HomeController;
-import next.controller.ListUserController;
+import next.controller.*;
 
 import java.util.Map;
 
@@ -12,7 +11,15 @@ import java.util.Map;
 public class RequestMapping {
     public static Map<String, Controller> controllerMap = ImmutableMap.<String, Controller>builder()
             .put("/", new HomeController())
-            .put("/user/list", new ListUserController())
+            .put("/users", new ListUserController())
+            .put("/users/loginForm", new ForwardController("/user/login.jsp"))
+            .put("/users/form", new ForwardController("/user/form.jsp"))
+            .put("/users/login", new LoginController())
+            .put("/users/profile", new ProfileController())
+            .put("/users/logout", new LogoutController())
+            .put("/users/create", new CreateUserController())
+            .put("/users/updateForm", new UpdateFormUserController())
+            .put("/users/update", new UpdateUserController())
             .build();
 
     public Controller find(String url) {
