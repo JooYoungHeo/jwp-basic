@@ -40,8 +40,19 @@ public class ReflectionTest {
         Class<User> clazz = User.class;
         Constructor[] constructors = clazz.getDeclaredConstructors();
         for (Constructor constructor : constructors){
-           Class[] classes = constructor.getParameterTypes();
-
+            Class prevc[] = constructor.getParameterTypes();
+            for(Class zxcv : prevc){
+                System.out.println(zxcv);
+            }
+//            try {
+//                User user = (User) constructor.newInstance("asdf", "asdf", "asdf", "asdf");
+//            } catch (InstantiationException e) {
+//                e.printStackTrace();
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            } catch (InvocationTargetException e) {
+//                e.printStackTrace();
+//            }
         }
     }
     
