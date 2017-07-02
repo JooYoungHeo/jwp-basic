@@ -9,6 +9,7 @@ import next.model.User;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ReflectionTest {
@@ -37,7 +38,11 @@ public class ReflectionTest {
     @Test
     public void newInstanceWithConstructorArgs() {
         Class<User> clazz = User.class;
-//        logger.debug(clazz.getName());
+        Constructor[] constructors = clazz.getDeclaredConstructors();
+        for (Constructor constructor : constructors){
+           Class[] classes = constructor.getParameterTypes();
+
+        }
     }
     
     @Test
