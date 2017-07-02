@@ -1,9 +1,9 @@
 package core.ref;
 
 public class Student {
-    private String name;
+    private String name = "Heo Joo Young";
 
-    private int age;
+    private int age = 30;
 
     public String getName() {
         return name;

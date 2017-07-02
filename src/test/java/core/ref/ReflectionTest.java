@@ -43,6 +43,17 @@ public class ReflectionTest {
     @Test
     public void privateFieldAccess() {
         Class<Student> clazz = Student.class;
-//        logger.debug(clazz.getName());
+        Field nameField = null;
+        try {
+            nameField = clazz.getDeclaredField("name");
+            nameField.setAccessible(true);
+            Student student = new Student();
+            nameField.set(student, "가나다");
+            System.out.println(student.getName());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
